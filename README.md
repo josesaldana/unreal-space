@@ -1,3 +1,3 @@
 # Unreal Space
 
-Sample pygame space game.
+Pygame space game

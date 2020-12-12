@@ -11,9 +11,9 @@ class SpriteSheet(object):
     def __init__(self, filename):
         try:
             self.sheet = pygame.image.load(filename).convert()
-        except pygame.error, message:
-            print 'Unable to load spritesheet image:', filename
-            raise SystemExit, message
+        except pygame.error:
+            print('Unable to load spritesheet image:', filename)
+            raise SystemExit
 
     def images_by(self, frame_width, frame_height, colorkey = None, inset = (0, 0, 0, 0)):
         self.frames_per_row = self.sheet.get_width() / frame_width
@@ -26,8 +26,8 @@ class SpriteSheet(object):
                 frame_width - inset[2],
                 frame_height - inset[3]
             )
-            for x in range(0, self.frames_per_row)
-            for y in range(0, self.frames_per_column)
+            for x in range(0, int(self.frames_per_row))
+            for y in range(0, int(self.frames_per_column))
         ]
 
         return self.images_at(rectangles, colorkey)
@@ -39,7 +39,7 @@ class SpriteSheet(object):
         image = pygame.Surface(rect.size)#.convert()
         image.blit(self.sheet, (0, 0), rect)
         if colorkey is not None:
-            if colorkey is -1:
+            if colorkey == -1:
                 colorkey = image.get_at((0,0))
             image.set_colorkey(colorkey, pygame.RLEACCEL)
         return image
